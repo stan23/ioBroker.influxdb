@@ -1289,12 +1289,27 @@ function query(adapter, msg) {
 }
 
 function storeState(adapter, msg) {
-    if (!msg.message || !msg.message.id || !msg.message.state) {
-        adapter.log.error('storeState called with invalid data');
-        adapter.sendTo(msg.from, msg.command, {
-            error:  'Invalid call'
+//    if (!msg.message || !msg.message.id || !msg.message.state) {
+    if (!msg.message) {
+      adapter.log.error('storeState called with invalid data (.message');
+      adapter.sendTo(msg.from, msg.command, {
+        error:  'Invalid call'
         }, msg.callback);
+      return;
+      if (!msg.message.id) {
+        adapter.log.error('storeState called with invalid data (.message.id)');
+        adapter.sendTo(msg.from, msg.command, {
+          error:  'Invalid call'
+          }, msg.callback);
         return;
+        if (!msg.message.state) {
+          adapter.log.error('storeState called with invalid data (.message.state');
+          adapter.sendTo(msg.from, msg.command, {
+            error:  'Invalid call'
+            }, msg.callback);
+          return;
+        }
+      }
     }
 
     let id;
